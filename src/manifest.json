@@ -1,0 +1,13 @@
+{
+  "name": "MySQL-Reference-Manual-Min-Version",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Warning if version of MySQL reference manual is out of range",
+  "content_scripts": [
+    {
+      "matches": ["http://dev.mysql.com/*"],
+      "js": ["vendor/jquery.js", "js/main.js", "js/lib/Admonitor.js", "js/lib/MySQLRefManURLPath.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
