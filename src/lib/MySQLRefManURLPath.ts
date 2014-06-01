@@ -7,6 +7,7 @@ class MySQLRefManURLPath {
 
     retrieveManVersion() : number {
         var paths : Array<string> = this.path.split('/');
-        return Number(paths[2]);
+        return Number(paths[3]);
     }
 }
+
