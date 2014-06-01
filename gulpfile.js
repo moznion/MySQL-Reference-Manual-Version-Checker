@@ -40,7 +40,7 @@ gulp.task('typescript', function () {
         .pipe(gulp.dest('src/js'));
 });
 
-gulp.task('copy', ['copy-manifest', 'copy-src', 'copy-vendor']);
+gulp.task('copy', ['copy-manifest', 'copy-src']);
 
 gulp.task('copy-manifest', function () {
     return gulp.src('src/manifest.json')
@@ -52,11 +52,6 @@ gulp.task('copy-src', function () {
         .pipe(gulp.dest('app/js'));
 });
 
-gulp.task('copy-vendor', function () {
-    return gulp.src('vendor/*')
-        .pipe(gulp.dest('app/vendor'));
-});
-
 gulp.task('tsd', function () {
     return gulp.src('./gulp_tsd.json').pipe(tsd());
 });
@@ -64,7 +59,7 @@ gulp.task('tsd', function () {
 gulp.task('bower', function () {
     return bower().pipe(uglify({preserveComments:'some'}))
         .pipe(flatten())
-        .pipe(gulp.dest('vendor'));
+        .pipe(gulp.dest('app/vendor'));
 });
 
 gulp.task('clean', function () {
@@ -81,6 +76,6 @@ gulp.task('manifest', function () {
 });
 
 gulp.task('build', function () {
-    runSequence('typescript', 'copy');
+    runSequence('typescript', 'bower', 'copy');
 });
 
