@@ -6,7 +6,7 @@
   "content_scripts": [
     {
       "matches": ["http://dev.mysql.com/*"],
-      "js": ["vendor/jquery.js", "js/main.js", "js/lib/Admonitor.js", "js/lib/MySQLRefManURLPath.js"],
+      "js": ["vendor/jquery.js", "vendor/lodash.compat.js", "js/main.js", "js/lib/Admonitor.js", "js/lib/MySQLRefManURLPath.js", "js/lib/URLResolver.js"],
       "run_at": "document_start"
     }
   ]
