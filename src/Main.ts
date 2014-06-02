@@ -20,9 +20,9 @@ class Main {
 
             var dfd : any = $.Deferred();
             var resolver = new URLResolver(dfd, path, version, {"floor": floor, "cap": cap});
-            resolver.resolve().done(function () {
+            resolver.resolve().done(() => {
                 admonitor.appendAltPage(resolver.resolved);
-            }).fail(function () {
+            }).fail(() => {
                 console.log('Alternative page does not exist');
             });
         }

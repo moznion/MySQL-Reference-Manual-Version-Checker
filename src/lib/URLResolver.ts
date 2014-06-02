@@ -16,9 +16,9 @@ class URLResolver {
         this.info = info;
 
         if (version < info.floor) {
-            this.refManVersions = _.filter(this.refManVersions, function (version) { return version > version; });
+            this.refManVersions = _.filter(this.refManVersions, (v) => { return this.version < v });
         } else if (version > info.cap) {
-            this.refManVersions = _.filter(this.refManVersions, function (version) { return version < version; });
+            this.refManVersions = _.filter(this.refManVersions, (v) => { return this.version > v });
         }
     }
 
@@ -30,13 +30,13 @@ class URLResolver {
             this.dfd.reject();
         }
 
-        _.remove(this.refManVersions, function (version) { return version == max; });
+        _.remove(this.refManVersions, (version) => { return version == max; });
 
         var self = this;
-        this._resolve(max).done(function (serviceDocument) {
+        this._resolve(max).done((serviceDocument) => {
             self.resolved = self.path.buildURLWithVersion(max);
             self.dfd.resolve();
-        }).fail(function () {
+        }).fail(() => {
             self.resolve();
         });
 
@@ -50,9 +50,9 @@ class URLResolver {
         $.ajax({
             url: self.path.buildURLWithVersion(max),
             type: 'HEAD',
-        }).done(function () {
+        }).done(() => {
             _dfd.resolve();
-        }).fail(function () {
+        }).fail(() => {
             _dfd.reject();
         });
 

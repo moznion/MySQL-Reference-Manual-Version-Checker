@@ -21,7 +21,7 @@ module Options {
             this.dom = new Dom();
             this.dom.fill();
             var self = this;
-            this.dom.saveButton.click(function () {
+            this.dom.saveButton.click(() => {
                 var floorVersion = self.dom.floor.val() || 0.0;
                 var capVersion = self.dom.cap.val() || Infinity;
 
