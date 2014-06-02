@@ -16,9 +16,9 @@ class URLResolver {
         this.info = info;
 
         if (version < info.floor) {
-            this.refManVersions = _.filter(this.refManVersions, function (version) { return version >= version; });
+            this.refManVersions = _.filter(this.refManVersions, function (version) { return version > version; });
         } else if (version > info.cap) {
-            this.refManVersions = _.filter(this.refManVersions, function (version) { return version <= version; });
+            this.refManVersions = _.filter(this.refManVersions, function (version) { return version < version; });
         }
     }
 
