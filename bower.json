@@ -1,5 +1,5 @@
 {
-  "name": "mysql_reference_manual_min_version",
+  "name": "mysql_reference_manual_version_checker",
   "version": "0.0.1",
   "authors": [
     "moznion <moznion@gmail.com>"

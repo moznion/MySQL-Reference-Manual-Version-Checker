@@ -1,5 +1,5 @@
 {
-  "name": "MySQL-Reference-Manual-Min-Version",
+  "name": "MySQL-Reference-Manual-Version-Checker",
   "dependencies": {},
   "devDependencies": {
     "bower": "~1.3.1",

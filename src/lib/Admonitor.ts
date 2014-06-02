@@ -2,7 +2,7 @@
 
 class Admonitor {
     msg : string = "This manual version is out of range";
-    private id : string = "mysql_reference_manual_min_version_warning";
+    private id : string = "mysql_reference_manual_version_checker_warning";
 
     constructor() {}
 
