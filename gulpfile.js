@@ -40,7 +40,7 @@ gulp.task('typescript', function () {
         .pipe(gulp.dest('src/js'));
 });
 
-gulp.task('copy', ['copy-manifest', 'copy-src']);
+gulp.task('copy', ['copy-manifest', 'copy-src', 'copy-html']);
 
 gulp.task('copy-manifest', function () {
     return gulp.src('src/manifest.json')
@@ -50,6 +50,11 @@ gulp.task('copy-manifest', function () {
 gulp.task('copy-src', function () {
     return gulp.src('src/js/**/*.js')
         .pipe(gulp.dest('app/js'));
+});
+
+gulp.task('copy-html', function () {
+    return gulp.src('src/*.html')
+        .pipe(gulp.dest('app'));
 });
 
 gulp.task('tsd', function () {

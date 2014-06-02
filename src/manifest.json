@@ -6,9 +6,10 @@
   "content_scripts": [
     {
       "matches": ["http://dev.mysql.com/*"],
-      "js": ["vendor/jquery.js", "vendor/lodash.compat.js", "js/Main.js", "js/lib/Admonitor.js", "js/lib/MySQLRefManURLPath.js", "js/lib/URLResolver.js"],
+      "js": ["vendor/jquery.js", "vendor/lodash.compat.js", "js/Main.js", "js/lib/Admonitor.js", "js/lib/MySQLRefManURLPath.js", "js/lib/URLResolver.js", "js/lib/Options.js"],
       "run_at": "document_start"
     }
   ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "options_page": "options.html"
 }
