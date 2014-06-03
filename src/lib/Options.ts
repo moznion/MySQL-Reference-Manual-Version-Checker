@@ -10,11 +10,9 @@ module Options {
         constructor () {}
 
         fill () {
-            var self = this;
-
             ['floor', 'cap'].forEach((key) => {
                 chrome.storage.local.get(key, (result) => {
-                    self[key].val(result[key]);
+                    this[key].val(result[key]);
                 });
             });
         }
@@ -26,13 +24,12 @@ module Options {
         start () : void {
             this.dom = new Dom();
             this.dom.fill();
-            var self = this;
             this.dom.saveButton.click(() => {
-                var floorVersion = self.dom.floor.val() || Constants.defaultFloorVersion;
-                var capVersion = self.dom.cap.val() || Constants.defaultCapVersion
+                var floorVersion = this.dom.floor.val() || Constants.defaultFloorVersion;
+                var capVersion = this.dom.cap.val() || Constants.defaultCapVersion
 
                 if (_.isNaN(Number(floorVersion)) || _.isNaN(Number(capVersion))) {
-                    self.dom.saveButton.text('Some settings are wrong');
+                    this.dom.saveButton.text('Some settings are wrong');
                     return;
                 }
 
@@ -40,7 +37,7 @@ module Options {
                     "floor": floorVersion,
                     "cap": capVersion
                 }, () => {
-                    self.dom.saveButton.text('Saved!');
+                    this.dom.saveButton.text('Saved!');
                 });
             });
         }

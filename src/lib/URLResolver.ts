@@ -22,11 +22,9 @@ class URLResolver {
     }
 
     resolve() {
-        var self = this;
-
         if (_.isEmpty(this.refManVersions)) {
-            self.resolved = undefined;
-            self.dfd.reject();
+            this.resolved = undefined;
+            this.dfd.reject();
             return;
         }
 
@@ -34,10 +32,10 @@ class URLResolver {
         _.remove(this.refManVersions, (version) => { return version == max });
 
         this._resolve(max).done((serviceDocument) => {
-            self.resolved = self.path.buildURLWithVersion(max);
-            self.dfd.resolve();
+            this.resolved = this.path.buildURLWithVersion(max);
+            this.dfd.resolve();
         }).fail(() => {
-            self.resolve();
+            this.resolve();
         });
 
         return this.dfd.promise();
