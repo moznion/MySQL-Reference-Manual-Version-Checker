@@ -10,6 +10,7 @@ var Q = require('q');
 var exec = require('child_process').exec;
 var editJson = require('gulp-json-editor');
 var runSequence = require('gulp-run-sequence');
+var glob = require('glob');
 
 function tag () {
     var q = Q.defer();
@@ -67,8 +68,15 @@ gulp.task('bower', function () {
         .pipe(gulp.dest('app/vendor'));
 });
 
-gulp.task('clean', function () {
+gulp.task('clean', ['clean-app', 'clean-compiled']);
+
+gulp.task('clean-app', function () {
     return gulp.src('app')
+        .pipe(clean());
+});
+
+gulp.task('clean-compiled', function () {
+    return gulp.src('src/js')
         .pipe(clean());
 });
 
@@ -76,11 +84,18 @@ gulp.task('manifest', function () {
     return version().then(function (version) {
         return gulp.src('src/manifest.json')
             .pipe(editJson({ version: version }))
+            .pipe(editJson(function (json) {
+                var files = glob.sync("app/**/*.js", []);
+                json.content_scripts[0].js = files.map(function (path) {
+                    return path.slice(4);
+                });
+                return json;
+            }))
             .pipe(gulp.dest('app/'));
     });
 });
 
 gulp.task('build', function () {
-    runSequence('typescript', 'bower', 'copy');
+    runSequence('typescript', 'bower', 'copy', 'manifest');
 });
 
