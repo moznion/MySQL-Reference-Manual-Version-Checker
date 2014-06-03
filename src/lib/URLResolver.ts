@@ -17,22 +17,25 @@ class URLResolver {
 
         if (version < info.floor) {
             this.refManVersions = _.filter(this.refManVersions, (v) => { return this.version < v });
-        } else if (version > info.cap) {
+        }
+
+        if (version > info.cap) {
             this.refManVersions = _.filter(this.refManVersions, (v) => { return this.version > v });
         }
     }
 
     resolve() {
-        var max : number = _.max(this.refManVersions);
+        var self = this;
 
-        if (_.isUndefined(max)) {
-            this.resolved = undefined;
-            this.dfd.reject();
+        if (_.isEmpty(this.refManVersions)) {
+            self.resolved = undefined;
+            self.dfd.reject();
+            return;
         }
 
-        _.remove(this.refManVersions, (version) => { return version == max; });
+        var max : number = _.max(this.refManVersions);
+        _.remove(this.refManVersions, (version) => { return version == max });
 
-        var self = this;
         this._resolve(max).done((serviceDocument) => {
             self.resolved = self.path.buildURLWithVersion(max);
             self.dfd.resolve();
