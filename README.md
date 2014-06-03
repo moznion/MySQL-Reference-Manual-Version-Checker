@@ -35,6 +35,7 @@ npm install
 
 ```
 ./node_modules/.bin/bower install
+./node_modules/.bin/gulp tsd
 ```
 
 ### 4. Build
