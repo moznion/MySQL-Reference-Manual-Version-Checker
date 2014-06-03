@@ -15,12 +15,9 @@ class URLResolver {
         this.version = version;
         this.info = info;
 
-        if (version < info.floor) {
-            this.refManVersions = _.filter(this.refManVersions, (v) => { return this.version < v });
-        }
-
-        if (version > info.cap) {
-            this.refManVersions = _.filter(this.refManVersions, (v) => { return this.version > v });
+        this.refManVersions = _.filter(this.refManVersions, (v) => { return info.cap >= v });
+        if (this.version < info.floor) {
+            this.refManVersions = _.filter(this.refManVersions, (v) => { return this.version <= v });
         }
     }
 
