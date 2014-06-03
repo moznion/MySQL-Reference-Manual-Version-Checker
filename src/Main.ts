@@ -2,6 +2,7 @@
 /// <reference path="./lib/MySQLRefManURLPath.ts" />
 /// <reference path="./lib/Admonitor.ts" />
 /// <reference path="./lib/URLResolver.ts" />
+/// <reference path="./lib/Constants.ts" />
 
 class Main {
 
@@ -14,9 +15,9 @@ class Main {
         }
 
         chrome.storage.local.get('floor', (result) => {
-            var floor = result['floor'];
+            var floor = result['floor'] || Constants.defaultFloorVersion;
             chrome.storage.local.get('cap', (result) => {
-                var cap = result['cap'];
+                var cap = result['cap'] || Constants.defaultCapVersion;
                 if (version < floor || version > cap) {
                     var admonitor = new Admonitor();
                     admonitor.notice();

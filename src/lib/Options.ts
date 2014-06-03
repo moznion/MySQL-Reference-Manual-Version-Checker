@@ -1,4 +1,5 @@
 /// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="./Constants.ts" />
 
 module Options {
     class Dom {
@@ -27,8 +28,8 @@ module Options {
             this.dom.fill();
             var self = this;
             this.dom.saveButton.click(() => {
-                var floorVersion = self.dom.floor.val() || 0.0;
-                var capVersion = self.dom.cap.val() || 999.0 // XXX Chrome local storage cannot set Infinity;
+                var floorVersion = self.dom.floor.val() || Constants.defaultFloorVersion;
+                var capVersion = self.dom.cap.val() || Constants.defaultCapVersion
 
                 if (_.isNaN(Number(floorVersion)) || _.isNaN(Number(capVersion))) {
                     self.dom.saveButton.text('Some settings are wrong');
