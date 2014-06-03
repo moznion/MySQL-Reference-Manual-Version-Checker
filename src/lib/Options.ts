@@ -9,8 +9,13 @@ module Options {
         constructor () {}
 
         fill () {
-            this.floor.val(localStorage.getItem('floor'));
-            this.cap.val(localStorage.getItem('cap'));
+            var self = this;
+
+            ['floor', 'cap'].forEach((key) => {
+                chrome.storage.local.get(key, (result) => {
+                    self[key].val(result[key]);
+                });
+            });
         }
     }
 
@@ -23,16 +28,19 @@ module Options {
             var self = this;
             this.dom.saveButton.click(() => {
                 var floorVersion = self.dom.floor.val() || 0.0;
-                var capVersion = self.dom.cap.val() || Infinity;
+                var capVersion = self.dom.cap.val() || 999.0 // XXX Chrome local storage cannot set Infinity;
 
                 if (_.isNaN(Number(floorVersion)) || _.isNaN(Number(capVersion))) {
                     self.dom.saveButton.text('Some settings are wrong');
                     return;
                 }
 
-                localStorage.setItem('floor', self.dom.floor.val() || 0.0);
-                localStorage.setItem('cap', self.dom.cap.val() || Infinity);
-                self.dom.saveButton.text('Saved!');
+                chrome.storage.local.set({
+                    "floor": floorVersion,
+                    "cap": capVersion
+                }, () => {
+                    self.dom.saveButton.text('Saved!');
+                });
             });
         }
     }
