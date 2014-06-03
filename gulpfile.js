@@ -88,6 +88,8 @@ gulp.task('manifest', function () {
                 var files = glob.sync("app/**/*.js", []);
                 json.content_scripts[0].js = files.map(function (path) {
                     return path.slice(4);
+                }).filter(function (path) {
+                    return (path !== 'js/lib/Options.js');
                 });
                 return json;
             }))
