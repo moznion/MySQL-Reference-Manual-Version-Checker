@@ -4,6 +4,7 @@
 /// <reference path="./lib/URLResolver.ts" />
 
 class Main {
+
     static run() : void {
         var path = new MySQLRefManURLPath(location.href);
         var version : number = path.retrieveManVersion();
@@ -12,20 +13,24 @@ class Main {
             return;
         }
 
-        var floor : number = 5.0;
-        var cap : number = Infinity;
-        var admonitor = new Admonitor();
-        if (version < floor || version > cap) {
-            admonitor.notice();
+        chrome.storage.local.get('floor', (result) => {
+            var floor = result['floor'];
+            chrome.storage.local.get('cap', (result) => {
+                var cap = result['cap'];
+                if (version < floor || version > cap) {
+                    var admonitor = new Admonitor();
+                    admonitor.notice();
 
-            var dfd : any = $.Deferred();
-            var resolver = new URLResolver(dfd, path, version, {"floor": floor, "cap": cap});
-            resolver.resolve().done(() => {
-                admonitor.appendAltPage(resolver.resolved);
-            }).fail(() => {
-                console.log('Alternative page does not exist');
+                    var dfd : any = $.Deferred();
+                    var resolver = new URLResolver(dfd, path, version, {"floor": floor, "cap": cap});
+                    resolver.resolve().done(() => {
+                        admonitor.appendAltPage(resolver.resolved);
+                    }).fail(() => {
+                        console.log('Alternative page does not exist');
+                    });
+                }
             });
-        }
+        });
     }
 }
 
