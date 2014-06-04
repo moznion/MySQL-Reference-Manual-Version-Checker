@@ -1,8 +1,6 @@
 /// <reference path="../typings/tsd.d.ts" />
 /// <reference path="./lib/MySQLRefManURLPath.ts" />
 /// <reference path="./lib/Admonitor.ts" />
-/// <reference path="./lib/URLResolver.ts" />
-/// <reference path="./lib/Constants.ts" />
 
 class Main {
 
@@ -15,21 +13,11 @@ class Main {
         }
 
         chrome.storage.local.get('floor', (result) => {
-            var floor = result['floor'] || Constants.defaultFloorVersion;
+            var floor = result['floor'];
             chrome.storage.local.get('cap', (result) => {
-                var cap = result['cap'] || Constants.defaultCapVersion;
-                if (version < floor || version > cap) {
-                    var admonitor = new Admonitor();
-                    admonitor.notice();
-
-                    var dfd : any = $.Deferred();
-                    var resolver = new URLResolver(dfd, path, version, {"floor": floor, "cap": cap});
-                    resolver.resolve().done(() => {
-                        admonitor.appendAltPage(resolver.resolved);
-                    }).fail(() => {
-                        console.log('Alternative page does not exist');
-                    });
-                }
+                var cap = result['cap'];
+                var admonitor = new Admonitor(floor, cap);
+                admonitor.noticeIfOutOfVersionRange(path, version);
             });
         });
     }
