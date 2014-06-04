@@ -1,6 +1,6 @@
 # MySQL-Reference-Manual-Version-Checker
 
-Chrome extension warns if referring version of [MySQL reference manual](http://dev.mysql.com/doc/#manual) is out of range.
+Chrome extension that warns if referring version of [MySQL reference manual](http://dev.mysql.com/doc/#manual) is out of range.
 
 ## Overview
 
@@ -21,7 +21,7 @@ You can configure the following items;
 
 ## For developers
 
-Operation procedure to setup the development environment.
+Follows are the operation procedure to setup the development environment.
 
 ### 1. Install [node](http://nodejs.org/)
 
