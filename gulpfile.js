@@ -11,6 +11,7 @@ var exec = require('child_process').exec;
 var editJson = require('gulp-json-editor');
 var runSequence = require('gulp-run-sequence');
 var glob = require('glob');
+var zip = require('gulp-zip');
 
 function tag () {
     var q = Q.defer();
@@ -105,5 +106,13 @@ gulp.task('manifest', function () {
 
 gulp.task('build', function () {
     runSequence('typescript', 'bower', 'copy', 'manifest');
+});
+
+gulp.task('zip', ['build'], function () {
+    return version().then(function (version) {
+        return gulp.src('app/**/*')
+            .pipe(zip('MySQL-Reference-Manual-Version-Checker-' + version + '.zip'))
+            .pipe(gulp.dest('build'));
+    });
 });
 
