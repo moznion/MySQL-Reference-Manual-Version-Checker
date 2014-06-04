@@ -4,12 +4,11 @@
 class URLResolver {
     refManVersions: Array<number> = [3.23, 4.0, 4.1, 5.0, 5.1, 5.5, 5.6, 5.7];
     version: number;
-    dfd : any;
+    dfd : Q.Deferred<any>;
     info: any;
     path: MySQLRefManURLPath;
-    resolved: string;
 
-    constructor(dfd : any, path : MySQLRefManURLPath, version : number, info : any) {
+    constructor(dfd : Q.Deferred<any>, path : MySQLRefManURLPath, version : number, info : any) {
         this.dfd = dfd;
         this.path = path;
         this.version = version;
@@ -23,38 +22,28 @@ class URLResolver {
 
     resolve() {
         if (_.isEmpty(this.refManVersions)) {
-            this.resolved = undefined;
-            this.dfd.reject();
+            this.dfd.reject(undefined);
             return;
         }
 
         var max : number = _.max(this.refManVersions);
         _.remove(this.refManVersions, (version) => { return version == max });
 
-        this._resolve(max).done((serviceDocument) => {
-            this.resolved = this.path.buildURLWithVersion(max);
-            this.dfd.resolve();
-        }).fail(() => {
+        this._resolve(max).then(() => {
+            this.dfd.resolve(this.path.buildURLWithVersion(max));
+        }).catch(() => {
             this.resolve();
         });
 
-        return this.dfd.promise();
+        return this.dfd.promise;
     }
 
-    private _resolve(max : number) : any {
-        var _dfd : any = $.Deferred();
-
+    private _resolve(max : number) : Q.Promise<any> {
         var self = this;
-        $.ajax({
+        return Q($.ajax({
             url: self.path.buildURLWithVersion(max),
             type: 'HEAD',
-        }).done(() => {
-            _dfd.resolve();
-        }).fail(() => {
-            _dfd.reject();
-        });
-
-        return _dfd.promise();
+        }));
     }
 }
 

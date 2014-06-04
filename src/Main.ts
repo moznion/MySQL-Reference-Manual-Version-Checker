@@ -22,11 +22,11 @@ class Main {
                     var admonitor = new Admonitor();
                     admonitor.notice();
 
-                    var dfd : any = $.Deferred();
+                    var dfd : Q.Deferred<{}> = Q.defer();
                     var resolver = new URLResolver(dfd, path, version, {"floor": floor, "cap": cap});
-                    resolver.resolve().done(() => {
-                        admonitor.appendAltPage(resolver.resolved);
-                    }).fail(() => {
+                    resolver.resolve().then((resolved) => {
+                        admonitor.appendAltPage(resolved);
+                    }).catch(() => {
                         console.log('Alternative page does not exist');
                     });
                 }
