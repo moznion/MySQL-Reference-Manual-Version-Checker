@@ -16,6 +16,10 @@ class Admonitor {
         return '<h1 id="' + this.id + '" style="position:absolute; top:30px; left:180px; width:600px; background-color:red">' + this.msg + '<h1>';
     }
 
+    private appendAltPage(url: string): void {
+        $('#' + this.id).append(' (Alternative page is <a href="' + url + '">here</a>)');
+    }
+
     noticeIfOutOfVersionRange(path: MySQLRefManURLPath, version: number): void {
         if (version < this.floor || version > this.cap) {
             $("body").prepend(this.buildHTML());
@@ -28,10 +32,6 @@ class Admonitor {
                 console.log('Alternative page does not exist');
             });
         }
-    }
-
-    private appendAltPage(url: string): void {
-        $('#' + this.id).append(' (Alternative page is <a href="' + url + '">here</a>)');
     }
 }
 
