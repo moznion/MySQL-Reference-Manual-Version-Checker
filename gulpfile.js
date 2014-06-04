@@ -63,9 +63,15 @@ gulp.task('tsd', function () {
 });
 
 gulp.task('bower', function () {
-    return bower().pipe(uglify({preserveComments:'some'}))
-        .pipe(flatten())
-        .pipe(gulp.dest('app/vendor'));
+    return (function () {
+        gulp.src('bower_components/q/q.js')
+            .pipe(uglify({preserveComments:'some'}))
+            .pipe(flatten())
+            .pipe(gulp.dest('app/vendor'));
+        return bower().pipe(uglify({preserveComments:'some'}))
+            .pipe(flatten())
+            .pipe(gulp.dest('app/vendor'));
+    }());
 });
 
 gulp.task('clean', ['clean-app', 'clean-compiled']);
