@@ -2,7 +2,7 @@
   "name": "MySQL-Reference-Manual-Version-Checker",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "Warning if version of MySQL reference manual is out of range",
+  "description": "Warn if referring version of MySQL reference manual is out of range",
   "permissions":[
     "storage"
   ],
