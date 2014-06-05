@@ -13,7 +13,7 @@ class Admonitor {
     ) {}
 
     private buildHTML (): string {
-        return '<h1 id="' + this.id + '" style="position:absolute; top:30px; left:180px; width:600px; background-color:red">' + this.msg + '<h1>';
+        return '<h1 id="' + this.id + '" style="position:absolute; top:30px; left:180px; width:630px; background-color:red">' + this.msg + '<h1>';
     }
 
     private appendAltPage(url: string): void {
